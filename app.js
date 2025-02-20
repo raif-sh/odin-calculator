@@ -36,13 +36,11 @@ function operate(operator, num, ber){
 let firstNumber;
 let chosenOp;
 let secondNumber;
-let result;
 
 // Selecting html elements to insert input
 let getWorkingFirst = document.querySelector("#workingFirst");
 let getWorkingOp = document.querySelector("#workingOp");
 let getWorkingSecond = document.querySelector("#workingSecond");
-let getResult = document.querySelector("#calDone");
 
 // Selecting buttons for input
 let allInputs = document.querySelectorAll(".num");
@@ -51,8 +49,9 @@ let clearAll = document.querySelector("#clearWorking");
 let equalButton = document.querySelector("#doCalculation");
 
 function clearWorking(){
+    console.log("clearing")
     firstNumber = "";
-    getWorkingFirst.textContent = firstNumber;
+    getWorkingSecond.textContent = firstNumber;
 
     chosenOp = undefined;
     getWorkingOp.textContent = chosenOp;
@@ -60,22 +59,28 @@ function clearWorking(){
     secondNumber = "";
     getWorkingSecond.textContent = secondNumber;
 
-    result = "";
-    getResult.textContent = result;
+    getWorkingFirst.textContent = "";
+
 }
 
 // for clearing and getting calculation results
 clearAll.addEventListener("click", clearWorking)
+
 equalButton.addEventListener("click", () => {
-    let result = operate(chosenOp, firstNumber, secondNumber);
-    clearWorking()
-    getResult.textContent = result
+    if (firstNumber !== undefined && chosenOp !== undefined && secondNumber !== undefined){
+        let result = operate(chosenOp, firstNumber, secondNumber);
+        clearWorking()
+        getWorkingFirst.textContent = result
+        firstNumber = result
+    }
 })
 
 allOps.forEach(op => {
     op.addEventListener("click", () => {
-        chosenOp = op.textContent;
-        getWorkingOp.textContent = chosenOp;
+        if (firstNumber !== undefined){
+            chosenOp = op.textContent;
+            getWorkingOp.textContent = chosenOp;
+        }
     })
 })
 
