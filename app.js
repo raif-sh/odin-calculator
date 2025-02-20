@@ -17,6 +17,8 @@ function divide(foo, bar){
 
 function operate(operator, num, ber){
     console.log("starting operation for " + operator)
+    num = parseInt(num);
+    ber = parseInt(ber);
     if(operator === "+"){
         return add(num, ber);
     } else if (operator === "-") {
@@ -34,16 +36,19 @@ function operate(operator, num, ber){
 let firstNumber;
 let chosenOp;
 let secondNumber;
+let result;
 
 // Selecting html elements to insert input
 let getWorkingFirst = document.querySelector("#workingFirst");
 let getWorkingOp = document.querySelector("#workingOp");
 let getWorkingSecond = document.querySelector("#workingSecond");
+let getResult = document.querySelector("#calDone");
 
 // Selecting buttons for input
 let allInputs = document.querySelectorAll(".num");
 let allOps = document.querySelectorAll(".ops");
 let clearAll = document.querySelector("#clearWorking");
+let equalButton = document.querySelector("#doCalculation");
 
 function clearWorking(){
     firstNumber = "";
@@ -54,10 +59,18 @@ function clearWorking(){
 
     secondNumber = "";
     getWorkingSecond.textContent = secondNumber;
+
+    result = "";
+    getResult.textContent = result;
 }
 
-
+// for clearing and getting calculation results
 clearAll.addEventListener("click", clearWorking)
+equalButton.addEventListener("click", () => {
+    let result = operate(chosenOp, firstNumber, secondNumber);
+    clearWorking()
+    getResult.textContent = result
+})
 
 allOps.forEach(op => {
     op.addEventListener("click", () => {
