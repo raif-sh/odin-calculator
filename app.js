@@ -91,11 +91,14 @@ allOps.forEach(op => {
         if (firstNumber !== undefined && chosenOp === undefined){
             chosenOp = op.textContent;
             getWorkingOp.textContent = chosenOp;
+            console.log(chosenOp)
         } else if (chosenOp !== undefined && secondNumber === undefined) {
             chosenOp = op.textContent;
             getWorkingOp.textContent = chosenOp;
+            console.log(chosenOp)
         } else {
             let result = operate(chosenOp, firstNumber, secondNumber);
+            console.log(result)
             clearWorking()
             getWorkingFirst.textContent = result
             firstNumber = result
@@ -109,15 +112,19 @@ allInputs.forEach(number => {
         if (chosenOp === undefined){
             if (firstNumber === undefined){
                 firstNumber = number.textContent;
+                console.log(firstNumber)
             } else {
                 firstNumber += number.textContent;
+                console.log(firstNumber)
             }
             getWorkingFirst.textContent = firstNumber
         } else {
             if (secondNumber === undefined) {
                 secondNumber = number.textContent
+                console.log(secondNumber)
             } else {
                 secondNumber += number.textContent
+                console.log(secondNumber)
             }
             getWorkingSecond.textContent = secondNumber
         }
@@ -141,7 +148,7 @@ floatButton.addEventListener("click", () => {
 function countDecimal(number) {
     let decimalIndex = number.toString().indexOf('.');
     return decimalIndex >= 0 ? number.toString().length - decimalIndex - 1 : 0;
-
+}
 
 // Keyboard support
 
