@@ -72,7 +72,6 @@ equalButton.addEventListener("click", () => {
     if (firstNumber !== undefined && chosenOp !== undefined && secondNumber !== undefined){
         let result = operate(chosenOp, firstNumber, secondNumber);
         let decimalCheck = countDecimal(result)
-        console.log(decimalCheck)
         if(decimalCheck > 5){
             result = result.toFixed(5);
         }
@@ -136,23 +135,57 @@ floatButton.addEventListener("click", () => {
 
 // Keyboard stuff
 
-let container = Array.from(document.querySelectorAll('.container'));
+document.addEventListener('keydown', (e) => {
+    let prefix = "Digit"
 
-container.forEach(element => {
-    element.addEventListener("keydown", (event) => {
-        console.log(event)
-        console.log(event.code)
-        if (event.code === "Escape")
-        {
-            clearAll.click();
+    if (e.code === "Enter"){
+        equalButton.click();
+    }
+    if (e.code === "Escape"){
+        clearAll.click();
+    }
+    
+
+    if (e.code === "Backspace"){
+        if (chosenOp === undefined){
+            if (firstNumber === undefined){
+                return;
+            } else {
+                firstNumber = firstNumber.slice(0, -1);
+            }
+            getWorkingFirst.textContent = firstNumber
+        } else {
+            if (secondNumber === undefined) {
+                return
+            } else {
+                secondNumber = secondNumber.slice(0, -1);
+            }
+            getWorkingSecond.textContent = secondNumber
+        }
+    }
+
+    if (e.code.match(prefix)){
+        let s = e.code;
+        let input = s.charAt(s.length - 1);
+
+        if (chosenOp === undefined){
+            if (firstNumber === undefined){
+                firstNumber = input;
+            } else {
+                firstNumber += input;
+            }
+            getWorkingFirst.textContent = firstNumber
+        } else {
+            if (secondNumber === undefined) {
+                secondNumber = input
+            } else {
+                secondNumber += input
+            }
+            getWorkingSecond.textContent = secondNumber
         }
 
-        if (event.code === "Enter")
-        {
-            equalButton.click();
-        }
-    })
-});
+    }
+})
 
 
 // Count decimal places to round off and prevent overflow
