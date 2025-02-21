@@ -58,7 +58,7 @@ function clearWorking(){
     chosenOp = undefined;
     getWorkingOp.textContent = chosenOp;
 
-    secondNumber = "";
+    secondNumber = undefined;
     getWorkingSecond.textContent = secondNumber;
 
     getWorkingFirst.textContent = "";
@@ -71,6 +71,11 @@ clearAll.addEventListener("click", clearWorking)
 equalButton.addEventListener("click", () => {
     if (firstNumber !== undefined && chosenOp !== undefined && secondNumber !== undefined){
         let result = operate(chosenOp, firstNumber, secondNumber);
+        let decimalCheck = countDecimal(result)
+        console.log(decimalCheck)
+        if(decimalCheck > 5){
+            result = result.toFixed(5);
+        }
         clearWorking()
         getWorkingFirst.textContent = result
         firstNumber = result
@@ -83,7 +88,10 @@ allOps.forEach(op => {
         if (firstNumber !== undefined && chosenOp === undefined){
             chosenOp = op.textContent;
             getWorkingOp.textContent = chosenOp;
-        } else if (chosenOp !== undefined) {
+        } else if (chosenOp !== undefined && secondNumber === undefined) {
+            chosenOp = op.textContent;
+            getWorkingOp.textContent = chosenOp;
+        } else {
             let result = operate(chosenOp, firstNumber, secondNumber);
             clearWorking()
             getWorkingFirst.textContent = result
@@ -145,3 +153,11 @@ container.forEach(element => {
         }
     })
 });
+
+
+// Count decimal places to round off and prevent overflow
+
+function countDecimal(number) {
+    let decimalIndex = number.toString().indexOf('.');
+    return decimalIndex >= 0 ? number.toString().length - decimalIndex - 1 : 0;
+}
