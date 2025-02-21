@@ -16,17 +16,19 @@ function divide(foo, bar){
 }
 
 function operate(operator, num, ber){
-    console.log("starting operation for " + operator)
-    num = parseInt(num);
-    ber = parseInt(ber);
+    num = parseFloat(num);
+    ber = parseFloat(ber);
     if(operator === "+"){
-        return add(num, ber);
+        return (add(num, ber));
     } else if (operator === "-") {
-        return sub(num, ber);
+        return (sub(num, ber));
     } else if (operator === "*") {
-        return multiply(num, ber);
+        return (multiply(num, ber));
     } else if (operator === "/") {
-        return divide(num, ber);
+        if(ber === 0) {
+            return "lmao"
+        }
+        return (divide(num, ber));
     } else {
         return "invalid"
     }
@@ -47,9 +49,9 @@ let allInputs = document.querySelectorAll(".num");
 let allOps = document.querySelectorAll(".ops");
 let clearAll = document.querySelector("#clearWorking");
 let equalButton = document.querySelector("#doCalculation");
+let floatButton = document.querySelector(".float");
 
 function clearWorking(){
-    console.log("clearing")
     firstNumber = "";
     getWorkingSecond.textContent = firstNumber;
 
@@ -75,15 +77,22 @@ equalButton.addEventListener("click", () => {
     }
 })
 
+// Setting the operation for current calculation
 allOps.forEach(op => {
     op.addEventListener("click", () => {
-        if (firstNumber !== undefined){
+        if (firstNumber !== undefined && chosenOp === undefined){
             chosenOp = op.textContent;
             getWorkingOp.textContent = chosenOp;
+        } else if (chosenOp !== undefined) {
+            let result = operate(chosenOp, firstNumber, secondNumber);
+            clearWorking()
+            getWorkingFirst.textContent = result
+            firstNumber = result
         }
     })
 })
 
+// Setting all number inputs
 allInputs.forEach(number => {
     number.addEventListener("click", () => {
         if (chosenOp === undefined){
@@ -103,3 +112,36 @@ allInputs.forEach(number => {
         }
     })
 })
+
+// Setting up for decimal calculations
+
+floatButton.addEventListener("click", () => {
+    if (chosenOp === undefined && !firstNumber.includes('.')) {
+        firstNumber += ".";
+        getWorkingFirst.textContent = firstNumber
+    } else if (chosenOp !== undefined && !secondNumber.includes('.')) {
+        secondNumber += ".";
+        getWorkingSecond.textContent = secondNumber
+    } 
+})
+
+
+// Keyboard stuff
+
+let container = Array.from(document.querySelectorAll('.container'));
+
+container.forEach(element => {
+    element.addEventListener("keydown", (event) => {
+        console.log(event)
+        console.log(event.code)
+        if (event.code === "Escape")
+        {
+            clearAll.click();
+        }
+
+        if (event.code === "Enter")
+        {
+            equalButton.click();
+        }
+    })
+});
