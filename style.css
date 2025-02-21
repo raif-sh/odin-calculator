@@ -63,3 +63,9 @@ main {
 .ops {
     background-color: rgb(245, 251, 245);
 }
+
+.instruction {
+    color: rgb(164, 164, 164);
+    text-align: center;
+    align-self: end;
+}
