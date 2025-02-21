@@ -1,3 +1,4 @@
+// Creating the basic four math functions
 
 function add(foo, bar){
     return foo + bar;
@@ -14,6 +15,8 @@ function multiply(foo, bar){
 function divide(foo, bar){
     return foo / bar;
 }
+
+// calculating result of two numbers and operator input
 
 function operate(operator, num, ber){
     num = parseFloat(num);
@@ -51,6 +54,7 @@ let clearAll = document.querySelector("#clearWorking");
 let equalButton = document.querySelector("#doCalculation");
 let floatButton = document.querySelector(".float");
 
+// starting fresh
 function clearWorking(){
     firstNumber = "";
     getWorkingSecond.textContent = firstNumber;
@@ -65,7 +69,7 @@ function clearWorking(){
 
 }
 
-// for clearing and getting calculation results
+// listeners for clearing and getting calculation results
 clearAll.addEventListener("click", clearWorking)
 
 equalButton.addEventListener("click", () => {
@@ -99,7 +103,7 @@ allOps.forEach(op => {
     })
 })
 
-// Setting all number inputs
+// Setting all number inputs to add to variables for calculation
 allInputs.forEach(number => {
     number.addEventListener("click", () => {
         if (chosenOp === undefined){
@@ -132,8 +136,14 @@ floatButton.addEventListener("click", () => {
     } 
 })
 
+// Count decimal places to round off and prevent overflow
 
-// Keyboard stuff
+function countDecimal(number) {
+    let decimalIndex = number.toString().indexOf('.');
+    return decimalIndex >= 0 ? number.toString().length - decimalIndex - 1 : 0;
+
+
+// Keyboard support
 
 document.addEventListener('keydown', (e) => {
     let prefix = "Digit"
@@ -186,11 +196,3 @@ document.addEventListener('keydown', (e) => {
 
     }
 })
-
-
-// Count decimal places to round off and prevent overflow
-
-function countDecimal(number) {
-    let decimalIndex = number.toString().indexOf('.');
-    return decimalIndex >= 0 ? number.toString().length - decimalIndex - 1 : 0;
-}
